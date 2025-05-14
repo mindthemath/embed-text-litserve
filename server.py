@@ -1,6 +1,7 @@
 from sentence_transformers import SentenceTransformer
 import litserve as ls
 import os
+import numpy as np
 
 # Environment configurations
 PORT = int(os.environ.get("PORT", "8000"))
@@ -14,12 +15,17 @@ DIMENSION = int(os.environ.get("DIMENSION", "256"))
 class NomicTextAPI(ls.LitAPI):
     def setup(self, device: str):
         self.model = SentenceTransformer("nomic-ai/nomic-embed-text-v1.5", trust_remote_code=True, device=device)
-        self.prefix = "search_query"
+        self.prefix = "search_query: "
 
-    def predict(self, inputs: list[str]):
-        embeddings = self.model.encode([self.prefix + i for i in inputs])[:, :DIMENSION]
-        return embeddings
+    def decode_request(self, request):
+        return self.prefix + np.asarray([request["input"]])
 
+    def predict(self, inputs):
+        embeddings = self.model.encode(inputs)
+        return embeddings[:, :DIMENSION]
+
+    def encode_response(self, output):
+        return {"data": output.tolist()}
 
 if __name__ == "__main__":
     server = ls.LitServer(
@@ -28,7 +34,8 @@ if __name__ == "__main__":
         max_batch_size=MAX_BATCH_SIZE,
         track_requests=True,
         workers_per_device=NUM_API_SERVERS,
-        spec=ls.OpenAIEmbeddingSpec(),
+        # spec=ls.OpenAIEmbeddingSpec(),
+        api_path="/v1/embeddings",
     )
     server.run(
         port=PORT,
