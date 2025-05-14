@@ -1,7 +1,8 @@
-from sentence_transformers import SentenceTransformer
-import litserve as ls
 import os
+
+import litserve as ls
 import numpy as np
+from sentence_transformers import SentenceTransformer
 
 # Environment configurations
 PORT = int(os.environ.get("PORT", "8000"))
@@ -14,7 +15,9 @@ DIMENSION = int(os.environ.get("DIMENSION", "256"))
 
 class NomicTextAPI(ls.LitAPI):
     def setup(self, device: str):
-        self.model = SentenceTransformer("nomic-ai/nomic-embed-text-v1.5", trust_remote_code=True, device=device)
+        self.model = SentenceTransformer(
+            "nomic-ai/nomic-embed-text-v1.5", trust_remote_code=True, device=device
+        )
         self.prefix = "search_query: "
 
     def decode_request(self, request):
@@ -26,6 +29,7 @@ class NomicTextAPI(ls.LitAPI):
 
     def encode_response(self, output):
         return {"data": output.tolist()}
+
 
 if __name__ == "__main__":
     server = ls.LitServer(
