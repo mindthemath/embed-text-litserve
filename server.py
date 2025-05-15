@@ -8,9 +8,10 @@ from sentence_transformers import SentenceTransformer
 PORT = int(os.environ.get("PORT", "8000"))
 LOG_LEVEL = os.environ.get("LOG_LEVEL", "INFO")
 NUM_API_SERVERS = int(os.environ.get("NUM_API_SERVERS", "1"))
-MAX_BATCH_SIZE = int(os.environ.get("MAX_BATCH_SIZE", "1"))
+MAX_BATCH_SIZE = int(os.environ.get("MAX_BATCH_SIZE", "32"))
 NORMALIZE = bool(os.environ.get("NORMALIZE", "0"))
 DIMENSION = int(os.environ.get("DIMENSION", "256"))
+assert MAX_BATCH_SIZE > 1, "This implementation presumes MAX_BATCH_SIZE > 1"
 
 
 class NomicTextAPI(ls.LitAPI):
@@ -21,7 +22,7 @@ class NomicTextAPI(ls.LitAPI):
         self.prefix = "search_query: "
 
     def decode_request(self, request):
-        return self.prefix + np.asarray([request["input"]])
+        return self.prefix + np.asarray(request["input"])
 
     def predict(self, inputs):
         embeddings = self.model.encode(inputs)
