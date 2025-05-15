@@ -1,7 +1,7 @@
 import requests
 
 data = {
-    "input": "Your text string goes here",
+    "input": "some text to embed",
     "model": "nomic-embed-text-v1.5",
 }
 url = "http://localhost:8000/v1/embeddings"
