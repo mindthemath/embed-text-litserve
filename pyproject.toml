@@ -23,7 +23,7 @@ cu122 = [
 ]
 
 api = [
-    "litserve==0.2.8",
+    "litserve==0.2.9",
     "python-multipart>=0.0.20",
     "hf-transfer>=0.1.8",
     "hf-xet>=1.0.3",
