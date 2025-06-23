@@ -13,3 +13,6 @@ clean:
 
 requirements.cpu.txt: pyproject.toml
 	uv pip compile --extra cpu --extra api pyproject.toml -o requirements.cpu.txt
+
+requirements.gpu.txt: pyproject.toml
+	uv pip compile --extra cuda --extra api pyproject.toml -o requirements.gpu.txt
