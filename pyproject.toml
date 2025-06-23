@@ -1,7 +1,7 @@
 [project]
-name = "viz-api"
+name = "text-api"
 version = "0.1.0"
-description = "Add your description here"
+description = "nomic-embed-text-v1.5 via litserve"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
