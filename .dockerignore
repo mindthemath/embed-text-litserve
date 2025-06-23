@@ -1,0 +1,6 @@
+pyproject.toml
+client.py
+.gitignore
+.python-version
+uv.lock
+.venv/
