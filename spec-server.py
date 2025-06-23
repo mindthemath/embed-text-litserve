@@ -43,11 +43,11 @@ if __name__ == "__main__":
         accelerator="auto",
         track_requests=True,
         workers_per_device=WORKERS_PER_DEVICE,
-        num_api_servers=NUM_API_SERVERS,
         spec=ls.OpenAIEmbeddingSpec(),
     )
     server.run(
         port=PORT,
         host="0.0.0.0",
         log_level=LOG_LEVEL.lower(),
+        num_api_servers=NUM_API_SERVERS,
     )
