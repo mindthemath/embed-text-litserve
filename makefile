@@ -17,7 +17,7 @@ requirements.cpu.txt: pyproject.toml
 requirements.gpu.txt: pyproject.toml
 	uv pip compile --extra cuda --extra api pyproject.toml -o requirements.gpu.txt
 
-DOCKERFILE := Dockerfile.cpu
+DOCKERFILE := Dockerfile.cpu-prebaked
 IMAGE      := mindthemath/nomic-text-1.5-api
 TAG        := cpu-prebaked
 
