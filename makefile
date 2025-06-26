@@ -22,17 +22,17 @@ IMAGE      := mindthemath/nomic-text-1.5-api
 TAG        := cpu-prebaked
 
 setup-buildx:
-	docker buildx create --use --name multiarch-builder
+	docker buildx create --name multiarch-builder
 	docker buildx inspect --bootstrap
 
 test-buildx:
-	docker buildx build -f $(DOCKERFILE) \
+	docker buildx build --builder multiarch-builder -f $(DOCKERFILE) \
 		--platform linux/amd64,linux/arm64 \
 		-t $(IMAGE):$(TAG) \
 		.
 
 push:
-	docker buildx build -f $(DOCKERFILE) \
+	docker buildx build --builder multiarch-builder -f $(DOCKERFILE) \
 		--platform linux/amd64,linux/arm64 \
 		-t $(IMAGE):$(TAG) \
 		--push \
