@@ -12,7 +12,7 @@ WORKERS_PER_DEVICE = int(os.environ.get("WORKERS_PER_DEVICE", "1"))
 MAX_BATCH_SIZE = int(os.environ.get("MAX_BATCH_SIZE", "32"))
 BATCH_TIMEOUT = float(os.environ.get("BATCH_TIMEOUT", "0.1"))
 NORMALIZE = bool(os.environ.get("NORMALIZE", "0"))
-DIMENSION = int(os.environ.get("DIMENSION", "256"))
+DIMENSION = int(os.environ.get("DIMENSION", "768"))
 assert MAX_BATCH_SIZE > 1, "This implementation presumes MAX_BATCH_SIZE > 1"
 
 
