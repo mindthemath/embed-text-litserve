@@ -9,5 +9,6 @@ RUN pip install hf-transfer && \
 SentenceTransformer('nomic-ai/nomic-embed-text-v1.5', trust_remote_code=True)" && \
     pip uninstall -y hf-transfer
 
-COPY server.py server.py
-CMD ["python", "server.py"]
+EXPOSE 8000
+COPY server.py text-server.py
+CMD ["python", "text-server.py"]

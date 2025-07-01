@@ -28,6 +28,9 @@ class NomicTextAPI(ls.LitAPI):
 
     def predict(self, inputs):
         embeddings = self.model.encode(inputs)
+        # normalize the embeddings
+        if NORMALIZE:
+            embeddings = embeddings / np.linalg.norm(embeddings, axis=1, keepdims=True)
         return embeddings[:, :DIMENSION]
 
     def encode_response(self, output):
